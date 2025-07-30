@@ -1,1 +1,12 @@
-# Placeholder content for requirements.txt
+
+fastapi
+uvicorn
+pydantic
+python-multipart
+whisper
+openai
+requests
+numpy
+scipy
+scikit-learn
+jinja2

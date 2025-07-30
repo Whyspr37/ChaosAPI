@@ -1,1 +1,2 @@
-# Placeholder content for .gitignore
+__pycache__/
+.env
