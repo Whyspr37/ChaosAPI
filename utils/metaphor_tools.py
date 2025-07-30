@@ -1,1 +1,0 @@
-# Simulated code for metaphor_tools.py

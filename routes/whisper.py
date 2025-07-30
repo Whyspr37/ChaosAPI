@@ -1,29 +1,19 @@
-
+import requests
 from fastapi import APIRouter, UploadFile, File
-import os
-import whisper
-from tempfile import NamedTemporaryFile
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
-# Load the Whisper model (base, small, medium, large — choose based on performance needs)
-model = whisper.load_model("base")
-
+WHISPER_PROXY_URL = "https://your-whisper-server.ngrok.io/transcribe"  # Replace with actual
 
 @router.post("/transcribe")
-async def transcribe_audio(file: UploadFile = File(...)):
-    # Save uploaded file to a temporary location
-    with NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio:
-        temp_audio.write(await file.read())
-        temp_path = temp_audio.name
-
-    # Transcribe with Whisper
+async def proxy_transcribe(file: UploadFile = File(...)):
     try:
-        result = model.transcribe(temp_path)
-    finally:
-        os.remove(temp_path)  # Clean up
-
-    return {
-        "transcription": result.get("text", ""),
-        "language": result.get("language", "unknown")
-    }
+        response = requests.post(
+            WHISPER_PROXY_URL,
+            files={"file": (file.filename, file.file, file.content_type)},
+            headers={"x-api-key": "your-secret"}  # Optional
+        )
+        return JSONResponse(content=response.json())
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)

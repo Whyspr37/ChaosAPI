@@ -1,1 +1,0 @@
-# Simulated code for zine.py

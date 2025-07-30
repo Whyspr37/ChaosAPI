@@ -1,1 +1,0 @@
-# Simulated code for tarot_drawer.py

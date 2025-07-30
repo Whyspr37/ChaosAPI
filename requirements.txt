@@ -3,7 +3,7 @@ fastapi
 uvicorn
 pydantic
 python-multipart
-git+https://github.com/openai/whisper.git
+whisper
 openai
 requests
 numpy

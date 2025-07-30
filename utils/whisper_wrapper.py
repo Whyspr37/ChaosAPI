@@ -1,1 +1,0 @@
-# Simulated code for whisper_wrapper.py

@@ -1,1 +1,0 @@
-# Simulated code for emotion_detector.py
