@@ -1,2 +1,0 @@
-BACKUP_INTERVAL = 'weekly'
-ENABLE_WHISPER = True

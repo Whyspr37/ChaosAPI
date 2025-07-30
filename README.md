@@ -1,3 +1,1 @@
-# ChaosAPI
-
-Your personal archive with search, whisper, creative tools, and more.
+# Placeholder content for README.md
