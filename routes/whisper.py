@@ -1,17 +1,29 @@
 
 from fastapi import APIRouter, UploadFile, File
-import whisper
 import os
+import whisper
+from tempfile import NamedTemporaryFile
 
 router = APIRouter()
+
+# Load the Whisper model (base, small, medium, large — choose based on performance needs)
 model = whisper.load_model("base")
+
 
 @router.post("/transcribe")
 async def transcribe_audio(file: UploadFile = File(...)):
-    temp_path = f"temp_{file.filename}"
-    with open(temp_path, "wb") as f:
-        f.write(await file.read())
+    # Save uploaded file to a temporary location
+    with NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio:
+        temp_audio.write(await file.read())
+        temp_path = temp_audio.name
 
-    result = model.transcribe(temp_path)
-    os.remove(temp_path)
-    return {"transcription": result["text"]}
+    # Transcribe with Whisper
+    try:
+        result = model.transcribe(temp_path)
+    finally:
+        os.remove(temp_path)  # Clean up
+
+    return {
+        "transcription": result.get("text", ""),
+        "language": result.get("language", "unknown")
+    }
