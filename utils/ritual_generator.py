@@ -1,1 +1,2 @@
-# Simulated code for ritual_generator.py
+def generate_ritual(tags):
+    return f"Light a candle and reflect on these: {', '.join(tags)}"
